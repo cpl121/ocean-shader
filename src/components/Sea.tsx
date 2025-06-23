@@ -1,11 +1,11 @@
 'use client';
 import { useRef } from 'react';
-import vert from '@/shaders/basic.vert';
-import frag from '@/shaders/basic.frag';
+import vert from '@/shaders/waves.vert';
+import frag from '@/shaders/waves.frag';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
-const CustomShader = () => {
+const Sea = () => {
   const shaderRef = useRef<THREE.ShaderMaterial | null>(null);
 
   const alphaMap = useLoader(THREE.TextureLoader, '/assets/alpha.jpg');
@@ -27,4 +27,4 @@ const CustomShader = () => {
   );
 };
 
-export default CustomShader;
+export default Sea;

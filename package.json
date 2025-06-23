@@ -1,8 +1,8 @@
 {
-  "name": "shader-template",
+  "name": "ocean-shader",
   "version": "0.1.0",
   "private": true,
-  "description": "Minimal template to build custom WebGL shaders with Next.js 15, Three.js, and Turbopack.",
+  "description": "Realistic ocean rendering in WebGL with Three.js, Gerstner waves, foam, and light interaction.",
   "author": {
     "name": "cpl121",
     "email": "cesar.peonlam@gmail.com",

@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { CanvasLoader, CustomShader } from '@/components';
+import { CanvasLoader, Sea } from '@/components';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { Suspense } from 'react';
@@ -31,7 +31,7 @@ const Scene = () => {
       />
 
       <Suspense fallback={<CanvasLoader />} name={'Cell'}>
-        <CustomShader />
+        <Sea />
       </Suspense>
     </Canvas>
   );
