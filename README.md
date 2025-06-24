@@ -1,6 +1,6 @@
 # 🌊 Ocean Shader
 
-![Screenshot](public/assets/screenshot.jpg)
+![Screenshot](public/assets/screenshot.png)
 
 A WebGL project using **Three.js** and **React Three Fiber** to simulate realistic ocean waves with custom GLSL shaders. Features dynamic transitions between calm sea and storm conditions, with animated vertex displacement and color blending based on elevation and alpha maps.
 
