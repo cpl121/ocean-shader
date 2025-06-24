@@ -1,7 +1,7 @@
-uniform float uTime;
-uniform float uBigWavesSpeed;
+uniform float uPhase;
 uniform float uBigWavesElevation;
-uniform vec2 uBigWavesFrequency;
+uniform vec2  uBigWavesFrequency;
+
 uniform float uSmallWavesElevation;
 uniform float uSmallWavesFrequency;
 uniform float uSmallWavesSpeed;
@@ -10,20 +10,16 @@ uniform float uSmallWavesIteration;
 varying float vElevation;
 varying vec2 vUv;
 
-// Classic Perlin 3D Noise 
-// by Stefan Gustavson
-//
-vec4 permute(vec4 x)
-{
-    return mod(((x*34.0)+1.0)*x, 289.0);
+vec4 permute(vec4 x) {
+    return mod(((x * 34.0) + 1.0) * x, 289.0);
 }
-vec4 taylorInvSqrt(vec4 r)
-{
+
+vec4 taylorInvSqrt(vec4 r) {
     return 1.79284291400159 - 0.85373472095314 * r;
 }
-vec3 fade(vec3 t)
-{
-    return t*t*t*(t*(t*6.0-15.0)+10.0);
+
+vec3 fade(vec3 t) {
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
 }
 
 float cnoise(vec3 P)
@@ -95,25 +91,22 @@ float cnoise(vec3 P)
     return 2.2 * n_xyz;
 }
 
-void main()
-{
-    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-    float elevation = sin(modelPosition.x * uBigWavesFrequency.x + uTime * uBigWavesSpeed) * 
-                      sin(modelPosition.z * uBigWavesFrequency.y + uTime * uBigWavesSpeed) * 
-                      uBigWavesElevation;
+void main() {
+  vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
-    for(float i = 1.0; i <= uSmallWavesIteration; i++) {
-        elevation -= abs(cnoise(vec3(modelPosition.xz * uSmallWavesFrequency * i, uTime * uSmallWavesSpeed)) * uSmallWavesElevation / i);
-    }
+  float elevation =
+    sin(modelPosition.x * uBigWavesFrequency.x - uPhase) *
+    sin(modelPosition.z * uBigWavesFrequency.y - uPhase) *
+    uBigWavesElevation;
 
+  for (float i = 1.0; i <= uSmallWavesIteration; i++) {
+    float noise = cnoise(vec3(modelPosition.xz * uSmallWavesFrequency * i, uPhase * uSmallWavesSpeed));
+    elevation -= abs(noise * uSmallWavesElevation / i);
+  }
 
-    modelPosition.y += elevation;
-    vec4 viewPosition = viewMatrix * modelPosition;
-    vec4 projectedPosition = projectionMatrix * viewPosition;
+  modelPosition.y += elevation;
 
-    gl_Position = projectedPosition;
-
-    // Varying
-    vElevation=elevation;
-    vUv=uv;
+  gl_Position = projectionMatrix * viewMatrix * modelPosition;
+  vUv = uv;
+  vElevation = elevation;
 }
