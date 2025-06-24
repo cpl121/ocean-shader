@@ -2,9 +2,7 @@ import { useTexture } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-const Moon = () => {
-  const moonPosition: [number, number, number] = [6, 7, -5];
-
+const Moon = ({ moonPosition }: { moonPosition: [number, number, number] }) => {
   const { map, aoMap, roughnessMap, normalMap, displacementMap } = useTexture({
     map: './assets/moon/Moon_002_basecolor.webp',
     displacementMap: '/assets/moon/Moon_002_height.webp',
